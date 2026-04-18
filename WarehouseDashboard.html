@@ -394,14 +394,14 @@
     <main class="main">
       <div class="topbar">
         <div class="welcome">
-          <h2>Merhaba, Marmara Pharma Distribution Center</h2>
+          <h2 id="welcome-name">Merhaba, Depo</h2>
           <p>Bugün eczanelerden gelen talepleri değerlendirebilir, stok durumunu kontrol edebilir ve uygun sevkiyatları onaylayabilirsiniz.</p>
         </div>
 
         <div class="warehouse-box">
-          <strong>Merkez Kodu:</strong> MARMARA-DC-01<br />
-          <span style="color:#64748b; font-size:14px;">Sorumlu Personel: Selin Aras</span>
-        </div>
+  <strong>Merkez Kodu:</strong> <span id="center-code">-</span><br />
+  <span id="responsible-person" style="color:#64748b; font-size:14px;">Sorumlu Personel: Kullanıcı</span>
+    </div>
       </div>
 
       <section class="stats">
@@ -613,22 +613,37 @@
     </main>
   </div>
 
+ <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const savedUser = JSON.parse(localStorage.getItem('meditrackCurrentUser') || 'null');
+    const welcomeName = document.getElementById('welcome-name');
+    const responsiblePerson = document.getElementById('responsible-person');
+    const centerCode = document.getElementById('center-code');
+
+    if (savedUser) {
+      if (welcomeName) {
+        welcomeName.textContent = `Merhaba, ${savedUser.fullName}`;
+      }
+
+      if (responsiblePerson) {
+        responsiblePerson.textContent = `Sorumlu Personel: ${savedUser.fullName}`;
+      }
+
+      if (centerCode) {
+        centerCode.textContent = savedUser.centerCode || "-";
+      }
+    }
+  });
+</script>
   <script>
-    document.getElementById('plan-btn').addEventListener('click', function () {
-      alert('Demo sevkiyat planı oluşturma ekranı burada açılacak.');
-    });
+  document.addEventListener('DOMContentLoaded', function () {
+    const savedUser = JSON.parse(localStorage.getItem('meditrackCurrentUser') || 'null');
+    const welcomeName = document.getElementById('welcome-name');
 
-    document.querySelectorAll('.approve-btn').forEach(button => {
-      button.addEventListener('click', function () {
-        alert('Talep onaylandı. Bu noktada sevkiyat planına aktarılabilir.');
-      });
-    });
-
-    document.querySelectorAll('.hold-btn').forEach(button => {
-      button.addEventListener('click', function () {
-        alert('Talep beklemeye alındı. Stok kontrolü sonrası tekrar değerlendirilebilir.');
-      });
-    });
-  </script>
+    if (savedUser && welcomeName) {
+      welcomeName.textContent = `Merhaba, ${savedUser.fullName}`;
+    }
+  });
+</script>
 </body>
 </html>

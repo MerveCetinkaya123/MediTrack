@@ -393,14 +393,14 @@
     <main class="main">
       <div class="topbar">
         <div class="welcome">
-          <h2>Merhaba, Kadıköy Health Pharmacy</h2>
+          <h2 id="welcome-name">Merhaba, Eczane</h2>
           <p>Bugün stok durumunu görüntüleyebilir, eksik ürünler için talep oluşturabilir ve hasta ilaç isteklerini yönetebilirsiniz.</p>
         </div>
 
-        <div class="pharmacy-box">
-          <strong>Eczane Kodu:</strong> KAD-ECZ-102<br />
-          <span style="color:#64748b; font-size:14px;">Yetkili: Ecz. Elif Kaya</span>
-        </div>
+       <div class="pharmacy-box">
+  <strong>Eczane Kodu:</strong> <span id="pharmacy-code">-</span><br />
+  <span id="authorized-person" style="color:#64748b; font-size:14px;">Yetkili: Kullanıcı</span>
+    </div>
       </div>
 
       <section class="stats">
@@ -621,5 +621,27 @@
       });
     });
   </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const savedUser = JSON.parse(localStorage.getItem('meditrackCurrentUser') || 'null');
+    const welcomeName = document.getElementById('welcome-name');
+    const authorizedPerson = document.getElementById('authorized-person');
+    const pharmacyCode = document.getElementById('pharmacy-code');
+
+    if (savedUser) {
+      if (welcomeName) {
+        welcomeName.textContent = `Merhaba, ${savedUser.fullName}`;
+      }
+
+      if (authorizedPerson) {
+        authorizedPerson.textContent = `Yetkili: ${savedUser.fullName}`;
+      }
+
+      if (pharmacyCode) {
+        pharmacyCode.textContent = savedUser.pharmacyNo || "-";
+      }
+    }
+  });
+</script>
 </body>
 </html>

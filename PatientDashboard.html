@@ -371,14 +371,14 @@
     <main class="main">
       <div class="topbar">
         <div class="welcome">
-          <h2>Merhaba, Ayşe Yılmaz</h2>
+          <h2 id="welcome-name">Merhaba, Kullanıcı</h2>
           <p>Bugün reçete bilgilerinizi görüntüleyebilir, ilaç uygunluğunu kontrol edebilir ve yakındaki eczaneleri inceleyebilirsiniz.</p>
         </div>
 
         <div class="user-box">
-          <strong>Hasta No:</strong> PT-10245<br />
-          <span style="color:#64748b; font-size:14px;">Son giriş: 17 Nisan 2026</span>
-        </div>
+  <strong>Hasta No:</strong> <span id="patient-no">-</span><br />
+  <span id="last-login" style="color:#64748b; font-size:14px;">Son giriş: -</span>
+    </div>
       </div>
 
       <section class="stats">
@@ -547,5 +547,29 @@
       alert('Demo QR tarama ekranı burada açılacak. Sonraki adımda bunu gerçek bir reçete detay kartına bağlayabiliriz.');
     });
   </script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const savedUser = JSON.parse(localStorage.getItem('meditrackCurrentUser') || 'null');
+    const welcomeName = document.getElementById('welcome-name');
+    const patientNo = document.getElementById('patient-no');
+    const lastLogin = document.getElementById('last-login');
+
+    if (savedUser) {
+      if (welcomeName) {
+        welcomeName.textContent = `Merhaba, ${savedUser.fullName}`;
+      }
+
+      if (patientNo) {
+        patientNo.textContent = savedUser.tc ? `PT-${savedUser.tc.slice(-5)}` : "-";
+      }
+
+      if (lastLogin) {
+        const today = new Date().toLocaleDateString('tr-TR');
+        lastLogin.textContent = `Son giriş: ${today}`;
+      }
+    }
+  });
+</script>
+
 </body>
 </html>
