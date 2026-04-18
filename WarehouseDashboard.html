@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MediTrack - Depo Paneli</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #f4f8fc;
+      color: #1f2937;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: linear-gradient(180deg, #0f5fc1 0%, #119e82 100%);
+      color: white;
+      padding: 28px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .brand h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .brand p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.5;
+      margin-bottom: 28px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .menu-item {
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.08);
+      cursor: pointer;
+      transition: 0.2s ease;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .menu-item:hover,
+    .menu-item.active {
+      background: rgba(255,255,255,0.18);
+    }
+
+    .sidebar-footer {
+      margin-top: 30px;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.12);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .main {
+      padding: 28px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .welcome h2 {
+      font-size: 30px;
+      margin-bottom: 6px;
+    }
+
+    .welcome p {
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    .warehouse-box {
+      background: white;
+      border: 1px solid #e5edf5;
+      border-radius: 18px;
+      padding: 14px 18px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1px solid #e6edf5;
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 14px 35px rgba(15, 23, 42, 0.05);
+    }
+
+    .stat-card span {
+      font-size: 13px;
+      color: #64748b;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .stat-card h3 {
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+
+    .stat-card p {
+      font-size: 14px;
+      color: #6b7280;
+      line-height: 1.5;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+      margin-bottom: 22px;
+    }
+
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e6edf5;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 14px 35px rgba(15, 23, 42, 0.05);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .card-header h3 {
+      font-size: 22px;
+    }
+
+    .card-header p {
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .primary-btn,
+    .secondary-btn,
+    .warning-btn {
+      border: none;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .primary-btn {
+      background: linear-gradient(90deg, #1d7df2 0%, #11a87f 100%);
+      color: white;
+    }
+
+    .secondary-btn {
+      background: #eef5ff;
+      color: #245ba8;
+    }
+
+    .warning-btn {
+      background: #fff7e6;
+      color: #a16207;
+    }
+
+    .primary-btn:hover,
+    .secondary-btn:hover,
+    .warning-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 220px;
+      height: 48px;
+      border: 1px solid #d7e2ee;
+      border-radius: 14px;
+      padding: 0 14px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .list,
+    .request-list,
+    .shipment-list,
+    .notice-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .list-item {
+      border: 1px solid #e7eef6;
+      border-radius: 18px;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .list-item h4 {
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+
+    .list-item p {
+      font-size: 14px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    .item-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .badge.success {
+      background: #e8faf1;
+      color: #147a52;
+    }
+
+    .badge.warning {
+      background: #fff7e6;
+      color: #a16207;
+    }
+
+    .badge.info {
+      background: #eef5ff;
+      color: #245ba8;
+    }
+
+    .badge.danger {
+      background: #ffe4e6;
+      color: #be123c;
+    }
+
+    .summary-box {
+      border: 2px dashed #bfdbfe;
+      background: #f8fbff;
+      border-radius: 20px;
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+
+    .summary-box h4 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .summary-box p {
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .mini-card {
+      padding: 14px;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid #e7eef6;
+    }
+
+    .mini-card span {
+      display: block;
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+
+    .mini-card strong {
+      font-size: 20px;
+    }
+
+    @media (max-width: 1100px) {
+      .stats,
+      .content-grid,
+      .bottom-grid,
+      .mini-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .main {
+        padding: 18px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .welcome h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div>
+        <div class="brand">
+          <h1>MediTrack</h1>
+          <p>Depo paneli üzerinden eczanelerden gelen ilaç taleplerini görebilir, bölgesel stokları inceleyebilir ve sevkiyat onayı verebilirsiniz.</p>
+        </div>
+
+        <nav class="menu">
+          <div class="menu-item active">Ana Sayfa</div>
+          <div class="menu-item">Gelen Talepler</div>
+          <div class="menu-item">Bölgesel Stoklar</div>
+          <div class="menu-item">Sevkiyat Planı</div>
+          <div class="menu-item">Onay Bekleyenler</div>
+          <div class="menu-item">Raporlar</div>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        <strong>Demo Bilgisi:</strong><br />
+        Bu panel bitirme projesi prototipi için hazırlanmıştır. Tüm veriler örnek amaçlıdır.
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="welcome">
+          <h2>Merhaba, Marmara Pharma Distribution Center</h2>
+          <p>Bugün eczanelerden gelen talepleri değerlendirebilir, stok durumunu kontrol edebilir ve uygun sevkiyatları onaylayabilirsiniz.</p>
+        </div>
+
+        <div class="warehouse-box">
+          <strong>Merkez Kodu:</strong> MARMARA-DC-01<br />
+          <span style="color:#64748b; font-size:14px;">Sorumlu Personel: Selin Aras</span>
+        </div>
+      </div>
+
+      <section class="stats">
+        <div class="stat-card">
+          <span>Bugünkü Talep</span>
+          <h3>18</h3>
+          <p>Eczanelerden bugün gelen toplam ilaç talebi.</p>
+        </div>
+        <div class="stat-card">
+          <span>Onaylanan Sevkiyat</span>
+          <h3>9</h3>
+          <p>Hazırlanmış ve gönderime alınmış talepler.</p>
+        </div>
+        <div class="stat-card">
+          <span>Bekleyen İnceleme</span>
+          <h3>6</h3>
+          <p>Stok veya öncelik kontrolü bekleyen istekler.</p>
+        </div>
+        <div class="stat-card">
+          <span>Kritik Ürün</span>
+          <h3>3</h3>
+          <p>Bölgesel stokta dikkat gerektiren ürünler.</p>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>Gelen Talepler</h3>
+              <p>Eczanelerden gelen ürün isteklerini değerlendirin ve sevkiyat kararını verin.</p>
+            </div>
+            <button class="primary-btn" id="plan-btn">Sevkiyat Planı Oluştur</button>
+          </div>
+
+          <div class="toolbar">
+            <input class="search-box" type="text" placeholder="Eczane adı, ürün adı veya talep no ile ara" />
+            <button class="secondary-btn">Tüm Talepler</button>
+            <button class="warning-btn">Bekleyenler</button>
+            <button class="secondary-btn">Onaylananlar</button>
+          </div>
+
+          <div class="summary-box">
+            <h4>Bugünkü talep özeti</h4>
+            <p>En çok istenen ürünler ve öncelikli bölgeler bu alanda hızlıca görüntülenebilir.</p>
+
+            <div class="mini-stats">
+              <div class="mini-card">
+                <span>En Çok İstenen</span>
+                <strong>Ventolin</strong>
+              </div>
+              <div class="mini-card">
+                <span>Öncelikli Bölge</span>
+                <strong>Kadıköy</strong>
+              </div>
+              <div class="mini-card">
+                <span>Hazır Sevkiyat</span>
+                <strong>9</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="request-list">
+            <div class="list-item">
+              <div>
+                <h4>Talep No: TP-2026-1402</h4>
+                <p>Kadıköy Health Pharmacy • Ventolin Şurup • 12 Adet</p>
+              </div>
+              <div class="item-actions">
+                <span class="badge warning">İnceleniyor</span>
+                <button class="secondary-btn">Detay</button>
+                <button class="primary-btn approve-btn">Onayla</button>
+              </div>
+            </div>
+
+            <div class="list-item">
+              <div>
+                <h4>Talep No: TP-2026-1405</h4>
+                <p>Moda Care Pharmacy • Dolven Şurup • 20 Adet</p>
+              </div>
+              <div class="item-actions">
+                <span class="badge success">Hazır</span>
+                <button class="secondary-btn">Sevkiyat Detayı</button>
+              </div>
+            </div>
+
+            <div class="list-item">
+              <div>
+                <h4>Talep No: TP-2026-1408</h4>
+                <p>Rıhtım Plus Pharmacy • Augmentin 1000 mg • 8 Kutu</p>
+              </div>
+              <div class="item-actions">
+                <span class="badge info">Stok Kontrolü</span>
+                <button class="secondary-btn">Kontrol Et</button>
+                <button class="warning-btn hold-btn">Beklet</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>Bölgesel Stok Görünümü</h3>
+              <p>Depodaki ürünlerin genel durumunu görüntüleyin.</p>
+            </div>
+          </div>
+
+          <div class="list">
+            <div class="list-item">
+              <div>
+                <h4>Parol 500 mg</h4>
+                <p>Toplam stok: 320 kutu • Raf alanı: A-01</p>
+              </div>
+              <span class="badge success">Yeterli</span>
+            </div>
+
+            <div class="list-item">
+              <div>
+                <h4>Ventolin Şurup</h4>
+                <p>Toplam stok: 42 adet • Raf alanı: B-07</p>
+              </div>
+              <span class="badge warning">Azalıyor</span>
+            </div>
+
+            <div class="list-item">
+              <div>
+                <h4>Nurofen Cold Flu</h4>
+                <p>Toplam stok: 9 kutu • Raf alanı: C-11</p>
+              </div>
+              <span class="badge danger">Kritik</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bottom-grid">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>Sevkiyat Planı</h3>
+              <p>Bugün gönderilecek ve hazırlanan sevkiyatlar.</p>
+            </div>
+            <button class="secondary-btn">Tüm Planlar</button>
+          </div>
+
+          <div class="shipment-list">
+            <div class="list-item">
+              <div>
+                <h4>SV-2026-301</h4>
+                <p>Kadıköy Health Pharmacy • Çıkış saati: 14:30</p>
+              </div>
+              <span class="badge success">Hazırlandı</span>
+            </div>
+
+            <div class="list-item">
+              <div>
+                <h4>SV-2026-304</h4>
+                <p>Moda Care Pharmacy • Kurye ataması yapıldı</p>
+              </div>
+              <span class="badge info">Yolda</span>
+            </div>
+
+            <div class="list-item">
+              <div>
+                <h4>SV-2026-309</h4>
+                <p>Rıhtım Plus Pharmacy • Paketleme tamamlanmadı</p>
+              </div>
+              <span class="badge warning">Hazırlanıyor</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>Kritik Bildirimler</h3>
+              <p>Öncelikli ürün ve işlem uyarıları.</p>
+            </div>
+          </div>
+
+          <div class="notice-list">
+            <div class="list-item">
+              <div>
+                <h4>3 ürün kritik seviyede</h4>
+                <p>Bazı ürünlerde sevkiyat sonrası stok seviyesi çok düşecek.</p>
+              </div>
+              <button class="warning-btn">Listele</button>
+            </div>
+
+            <div class="list-item">
+              <div>
+                <h4>6 talep inceleme bekliyor</h4>
+                <p>Stok yeterliliği ve öncelik sırası kontrol edilmeli.</p>
+              </div>
+              <button class="secondary-btn">İncele</button>
+            </div>
+
+            <div class="list-item">
+              <div>
+                <h4>2 sevkiyat gecikebilir</h4>
+                <p>Paketleme yoğunluğu nedeniyle teslim saatleri değişebilir.</p>
+              </div>
+              <button class="secondary-btn">Detay Gör</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    document.getElementById('plan-btn').addEventListener('click', function () {
+      alert('Demo sevkiyat planı oluşturma ekranı burada açılacak.');
+    });
+
+    document.querySelectorAll('.approve-btn').forEach(button => {
+      button.addEventListener('click', function () {
+        alert('Talep onaylandı. Bu noktada sevkiyat planına aktarılabilir.');
+      });
+    });
+
+    document.querySelectorAll('.hold-btn').forEach(button => {
+      button.addEventListener('click', function () {
+        alert('Talep beklemeye alındı. Stok kontrolü sonrası tekrar değerlendirilebilir.');
+      });
+    });
+  </script>
+</body>
+</html>

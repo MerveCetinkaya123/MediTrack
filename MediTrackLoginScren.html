@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MediTrack - Giriş</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #eaf4ff 0%, #f5fbff 45%, #eefaf5 100%);
+      color: #1f2937;
+    }
+
+    .container {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+
+    .left-panel {
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 28px;
+      background: linear-gradient(160deg, rgba(18, 103, 194, 0.95), rgba(14, 157, 125, 0.88));
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .left-panel::before,
+    .left-panel::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .left-panel::before {
+      width: 280px;
+      height: 280px;
+      top: -80px;
+      right: -60px;
+    }
+
+    .left-panel::after {
+      width: 220px;
+      height: 220px;
+      bottom: -70px;
+      left: -40px;
+    }
+
+    .brand {
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      font-size: 13px;
+      letter-spacing: 0.4px;
+      margin-bottom: 18px;
+    }
+
+    .brand h1 {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .brand p {
+      max-width: 560px;
+      line-height: 1.7;
+      font-size: 17px;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .feature-list {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(180px, 1fr));
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .feature-card {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .feature-card h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .right-panel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 540px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      border-radius: 28px;
+      padding: 32px;
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+    }
+
+    .login-card h2 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .login-card > p {
+      color: #6b7280;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .auth-tab {
+      height: 46px;
+      border: 1px solid #dbe5ef;
+      border-radius: 14px;
+      background: #f8fbff;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      color: #334155;
+      transition: 0.2s ease;
+    }
+
+    .auth-tab.active {
+      background: linear-gradient(90deg, #1d7df2 0%, #11a87f 100%);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 10px 20px rgba(29, 125, 242, 0.15);
+    }
+
+    .role-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .role-tab {
+      border: 1px solid #dbe5ef;
+      border-radius: 18px;
+      padding: 16px 12px;
+      background: #f8fbff;
+      cursor: pointer;
+      transition: 0.25s ease;
+      text-align: left;
+    }
+
+    .role-tab:hover {
+      transform: translateY(-2px);
+      border-color: #7cb5ff;
+    }
+
+    .role-tab.active {
+      background: linear-gradient(180deg, #e8f3ff 0%, #eefcf8 100%);
+      border-color: #1d7df2;
+      box-shadow: 0 10px 20px rgba(29, 125, 242, 0.12);
+    }
+
+    .role-tab strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .role-tab span {
+      display: block;
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.4;
+    }
+
+    .selected-role-info {
+      background: #f7fafc;
+      border: 1px solid #e6eef7;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 22px;
+    }
+
+    .selected-role-info h3 {
+      font-size: 17px;
+      margin-bottom: 6px;
+    }
+
+    .selected-role-info p {
+      color: #6b7280;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .input-group label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .input-group input,
+    .input-group select {
+      height: 50px;
+      border: 1px solid #d7e2ee;
+      border-radius: 14px;
+      padding: 0 14px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      background: white;
+    }
+
+    .input-group input:focus,
+    .input-group select:focus {
+      border-color: #1d7df2;
+      box-shadow: 0 0 0 4px rgba(29, 125, 242, 0.12);
+    }
+
+    .double-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .extras {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .link-btn {
+      background: none;
+      border: none;
+      color: #1d7df2;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .login-btn {
+      margin-top: 6px;
+      height: 52px;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(90deg, #1d7df2 0%, #11a87f 100%);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 24px rgba(17, 168, 127, 0.18);
+    }
+
+    .quick-preview {
+      margin-top: 22px;
+      padding-top: 22px;
+      border-top: 1px solid #e7edf4;
+    }
+
+    .quick-preview h4 {
+      font-size: 15px;
+      margin-bottom: 12px;
+      color: #334155;
+    }
+
+    .preview-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .preview-tag {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: #eef5ff;
+      color: #245ba8;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 980px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      .left-panel {
+        padding: 40px 24px;
+      }
+
+      .brand h1 {
+        font-size: 38px;
+      }
+
+      .feature-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .right-panel {
+        padding: 20px 14px 30px;
+      }
+
+      .login-card {
+        padding: 24px 18px;
+        border-radius: 22px;
+      }
+
+      .role-tabs {
+        grid-template-columns: 1fr;
+      }
+
+      .double-row {
+        grid-template-columns: 1fr;
+      }
+
+      .brand h1 {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="left-panel">
+      <div class="brand">
+        <div class="brand-badge">Digital Healthcare Supply System</div>
+        <h1>MediTrack</h1>
+        <p>
+          Hasta, eczane ve depo süreçlerini tek platformda birleştiren dijital sağlık yönetim sistemi.
+          Reçete erişimi, stok takibi ve tedarik talepleri tek akışta yönetilir.
+        </p>
+      </div>
+
+      <div class="feature-list">
+        <div class="feature-card">
+          <h3>QR Reçete Erişimi</h3>
+          <p>Hastalar reçetelerine hızlıca ulaşır ve geçmiş ilaç kayıtlarını görüntüler.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Canlı Stok Kontrolü</h3>
+          <p>Eczaneler mevcut ürün durumunu görüntüler, eksik ilaçları işaretler.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Depo Talep Yönetimi</h3>
+          <p>Eksik ürünler için bölgesel depoya anında tedarik isteği gönderilir.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Konum Bazlı Arama</h3>
+          <p>Hastalar kendilerine en yakın uygun eczaneleri sistem üzerinde bulabilir.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="right-panel">
+      <div class="login-card">
+        <h2 id="auth-heading">Hesabınıza giriş yapın</h2>
+        <p id="auth-subtext">Önce işlem türünü, ardından rolünüzü seçin. Sistem, seçtiğiniz kullanıcı tipine uygun alanları gösterecektir.</p>
+
+        <div class="auth-tabs">
+          <button class="auth-tab active" data-mode="login" type="button">Giriş Yap</button>
+          <button class="auth-tab" data-mode="register" type="button">Kayıt Ol</button>
+        </div>
+
+        <div class="role-tabs">
+          <button class="role-tab active" data-role="patient" type="button">
+            <strong>Hasta</strong>
+            <span>QR reçete, geçmiş işlemler ve yakındaki eczaneler</span>
+          </button>
+          <button class="role-tab" data-role="pharmacy" type="button">
+            <strong>Eczane</strong>
+            <span>Stok yönetimi, ilaç durumu ve tedarik talebi</span>
+          </button>
+          <button class="role-tab" data-role="warehouse" type="button">
+            <strong>Depo</strong>
+            <span>Bölgesel dağıtım merkezi ve tedarik onayı</span>
+          </button>
+        </div>
+
+        <div class="selected-role-info">
+          <h3 id="role-title">Hasta Girişi</h3>
+          <p id="role-description">QR ile reçete görüntüleme, önceki reçetelere erişim ve yakındaki eczane bilgileri için hasta hesabınızla giriş yapın.</p>
+        </div>
+
+        <form id="login-form">
+          <div class="double-row hidden" id="register-name-row">
+            <div class="input-group">
+              <label for="first-name">Ad</label>
+              <input type="text" id="first-name" placeholder="Adınızı girin" />
+            </div>
+            <div class="input-group">
+              <label for="last-name">Soyad</label>
+              <input type="text" id="last-name" placeholder="Soyadınızı girin" />
+            </div>
+          </div>
+
+          <div class="input-group hidden" id="extra-group">
+            <label for="field-extra" id="label-extra">Ad Soyad</label>
+            <input type="text" id="field-extra" placeholder="Adınızı ve soyadınızı girin" />
+          </div>
+
+          <div class="input-group">
+            <label for="field-one" id="label-one">T.C. Kimlik Numarası</label>
+            <input type="text" id="field-one" placeholder="11 haneli kimlik numaranızı girin" />
+          </div>
+
+          <div class="input-group">
+            <label for="field-two" id="label-two">Telefon Numarası</label>
+            <input type="text" id="field-two" placeholder="05xx xxx xx xx" />
+          </div>
+
+          <div class="double-row">
+            <div class="input-group">
+              <label for="field-password" id="password-label">Şifre</label>
+              <input type="password" id="field-password" placeholder="Şifrenizi girin" />
+            </div>
+            <div class="input-group hidden" id="confirm-password-group">
+              <label for="field-confirm-password">Şifre Tekrar</label>
+              <input type="password" id="field-confirm-password" placeholder="Şifrenizi tekrar girin" />
+            </div>
+          </div>
+
+          <div class="extras">
+            <label class="checkbox-row">
+              <input type="checkbox" />
+              <span id="agreement-text">Beni hatırla</span>
+            </label>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button class="link-btn" type="button" id="switch-link">Hesabın yok mu? Kayıt ol</button>
+              <button class="link-btn" type="button" id="forgot-password-btn">Şifremi unuttum</button>
+            </div>
+          </div>
+
+          <button class="login-btn" type="submit" id="submit-btn">Hasta olarak giriş yap</button>
+        </form>
+
+        <p id="switch-note" style="margin-top: 16px; color: #64748b; font-size: 14px; line-height: 1.6;">
+          Yeni kullanıcılar için kayıt seçeneği kullanılabilir. Kurumsal kullanıcılar için bu alan başvuru/hesap oluşturma mantığıyla da ilerleyebilir.
+        </p>
+
+        <div class="quick-preview">
+          <h4 id="preview-title">Giriş sonrası hızlı erişim</h4>
+          <div class="preview-tags" id="preview-tags">
+            <span class="preview-tag">QR Reçete Oku</span>
+            <span class="preview-tag">Önceki Reçetelerim</span>
+            <span class="preview-tag">Yakındaki Eczaneler</span>
+          </div>
+          <p class="footer-note">
+            Bu ekran proje prototipi içindir. Tüm kurum ve kullanıcı bilgileri örnek veridir.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const roles = {
+      patient: {
+        login: {
+          title: "Hasta Girişi",
+          description: "QR ile reçete görüntüleme, önceki reçetelere erişim ve yakındaki eczane bilgileri için hasta hesabınızla giriş yapın.",
+          extraLabel: "",
+          extraPlaceholder: "",
+          fieldOneLabel: "T.C. Kimlik Numarası",
+          fieldOnePlaceholder: "11 haneli kimlik numaranızı girin",
+          fieldTwoLabel: "Telefon Numarası",
+          fieldTwoPlaceholder: "05xx xxx xx xx",
+          passwordLabel: "Şifre",
+          passwordPlaceholder: "Şifrenizi girin",
+          submitText: "Hasta olarak giriş yap",
+          previewTitle: "Giriş sonrası hızlı erişim",
+          previewTags: ["QR Reçete Oku", "Önceki Reçetelerim", "Yakındaki Eczaneler"]
+        },
+        register: {
+          title: "Hasta Kaydı",
+          description: "Yeni hasta hesabı oluşturarak reçete geçmişinizi, QR işlemlerinizi ve eczane aramalarınızı sistemde takip edebilirsiniz.",
+          extraLabel: "Ad Soyad",
+          extraPlaceholder: "Adınızı ve soyadınızı girin",
+          fieldOneLabel: "T.C. Kimlik Numarası",
+          fieldOnePlaceholder: "11 haneli kimlik numaranızı girin",
+          fieldTwoLabel: "Telefon Numarası",
+          fieldTwoPlaceholder: "05xx xxx xx xx",
+          passwordLabel: "Şifre Oluştur",
+          passwordPlaceholder: "Yeni şifrenizi oluşturun",
+          submitText: "Hasta kaydını tamamla",
+          previewTitle: "Kayıt sonrası kullanılacak alanlar",
+          previewTags: ["QR Reçete Erişimi", "Reçete Geçmişi", "Yakındaki Eczaneler"]
+        }
+      },
+      pharmacy: {
+        login: {
+          title: "Eczane Girişi",
+          description: "Eczane stoğunu görüntülemek, eksik ilaçları işaretlemek ve depodan tedarik talebi oluşturmak için giriş yapın.",
+          extraLabel: "",
+          extraPlaceholder: "",
+          fieldOneLabel: "Eczane Kodu",
+          fieldOnePlaceholder: "Örn: KAD-ECZ-102",
+          fieldTwoLabel: "Yetkili Eczacı E-postası",
+          fieldTwoPlaceholder: "eczaci@ornek.com",
+          passwordLabel: "Yetkili Şifre",
+          passwordPlaceholder: "Yetkili şifrenizi girin",
+          submitText: "Eczane olarak giriş yap",
+          previewTitle: "Giriş sonrası hızlı erişim",
+          previewTags: ["Stok Durumu", "Eksik İlaç Bildir", "Depoya Talep Gönder"]
+        },
+        register: {
+          title: "Eczane Kaydı",
+          description: "Yeni eczane hesabı oluşturarak stok takibi, hasta talepleri ve depo bağlantılarını sistem üzerinde yönetebilirsiniz.",
+          extraLabel: "Eczane Adı",
+          extraPlaceholder: "Örn: Kadıköy Health Pharmacy",
+          fieldOneLabel: "Eczane Kodu",
+          fieldOnePlaceholder: "Örn: KAD-ECZ-102",
+          fieldTwoLabel: "Yetkili Eczacı E-postası",
+          fieldTwoPlaceholder: "eczaci@ornek.com",
+          passwordLabel: "Şifre Oluştur",
+          passwordPlaceholder: "Kurumsal giriş şifresi oluşturun",
+          submitText: "Eczane kaydını tamamla",
+          previewTitle: "Kayıt sonrası kullanılacak alanlar",
+          previewTags: ["Stok Yönetimi", "İlaç Durumu", "Tedarik Talepleri"]
+        }
+      },
+      warehouse: {
+        login: {
+          title: "Depo Girişi",
+          description: "Bölgesel ilaç taleplerini görmek, sevkiyat planlamak ve stok akışını yönetmek için depo hesabınıza giriş yapın.",
+          extraLabel: "",
+          extraPlaceholder: "",
+          fieldOneLabel: "Dağıtım Merkezi Kodu",
+          fieldOnePlaceholder: "Örn: MARMARA-DC-01",
+          fieldTwoLabel: "Personel ID",
+          fieldTwoPlaceholder: "Personel numaranızı girin",
+          passwordLabel: "Sistem Şifresi",
+          passwordPlaceholder: "Sistem şifrenizi girin",
+          submitText: "Depo olarak giriş yap",
+          previewTitle: "Giriş sonrası hızlı erişim",
+          previewTags: ["Talep Bildirimleri", "Bölgesel Stok", "Sevkiyat Onayı"]
+        },
+        register: {
+          title: "Depo Kaydı",
+          description: "Bölgesel dağıtım merkezi hesabı oluşturarak sevkiyat, onay ve stok akışını merkezi olarak yönetebilirsiniz.",
+          extraLabel: "Depo / Merkez Adı",
+          extraPlaceholder: "Örn: Marmara Pharma Distribution Center",
+          fieldOneLabel: "Dağıtım Merkezi Kodu",
+          fieldOnePlaceholder: "Örn: MARMARA-DC-01",
+          fieldTwoLabel: "Yetkili Personel E-postası",
+          fieldTwoPlaceholder: "depo@ornek.com",
+          passwordLabel: "Şifre Oluştur",
+          passwordPlaceholder: "Merkez şifresini oluşturun",
+          submitText: "Depo kaydını tamamla",
+          previewTitle: "Kayıt sonrası kullanılacak alanlar",
+          previewTags: ["Sevkiyat Yönetimi", "Talep Onayı", "Bölgesel Stok Takibi"]
+        }
+      }
+    };
+
+    const roleTabs = document.querySelectorAll('.role-tab');
+    const authTabs = document.querySelectorAll('.auth-tab');
+    const authHeading = document.getElementById('auth-heading');
+    const authSubtext = document.getElementById('auth-subtext');
+    const roleTitle = document.getElementById('role-title');
+    const roleDescription = document.getElementById('role-description');
+    const registerNameRow = document.getElementById('register-name-row');
+    const extraGroup = document.getElementById('extra-group');
+    const labelExtra = document.getElementById('label-extra');
+    const fieldExtra = document.getElementById('field-extra');
+    const labelOne = document.getElementById('label-one');
+    const labelTwo = document.getElementById('label-two');
+    const passwordLabel = document.getElementById('password-label');
+    const fieldOne = document.getElementById('field-one');
+    const fieldTwo = document.getElementById('field-two');
+    const fieldPassword = document.getElementById('field-password');
+    const confirmPasswordGroup = document.getElementById('confirm-password-group');
+    const agreementText = document.getElementById('agreement-text');
+    const switchLink = document.getElementById('switch-link');
+    const forgotPasswordBtn = document.getElementById('forgot-password-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    const previewTitle = document.getElementById('preview-title');
+    const previewTags = document.getElementById('preview-tags');
+    const switchNote = document.getElementById('switch-note');
+    const loginForm = document.getElementById('login-form');
+
+    let currentMode = 'login';
+
+    function renderRole(roleKey) {
+      const role = roles[roleKey][currentMode];
+
+      roleTabs.forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.role === roleKey);
+      });
+
+      authTabs.forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.mode === currentMode);
+      });
+
+      authHeading.textContent = currentMode === 'login' ? 'Hesabınıza giriş yapın' : 'Yeni hesap oluşturun';
+      authSubtext.textContent = currentMode === 'login'
+        ? 'Önce işlem türünü, ardından rolünüzü seçin. Sistem, seçtiğiniz kullanıcı tipine uygun alanları gösterecektir.'
+        : 'Yeni kayıt için işlem türünü ve rolünüzü seçin. Sistem, seçilen role göre gerekli bilgileri isteyecektir.';
+
+      roleTitle.textContent = role.title;
+      roleDescription.textContent = role.description;
+      labelOne.textContent = role.fieldOneLabel;
+      labelTwo.textContent = role.fieldTwoLabel;
+      passwordLabel.textContent = role.passwordLabel;
+      fieldOne.placeholder = role.fieldOnePlaceholder;
+      fieldTwo.placeholder = role.fieldTwoPlaceholder;
+      fieldPassword.placeholder = role.passwordPlaceholder;
+      submitBtn.textContent = role.submitText;
+      previewTitle.textContent = role.previewTitle;
+
+      if (currentMode === 'register') {
+        registerNameRow.classList.remove('hidden');
+        extraGroup.classList.remove('hidden');
+        confirmPasswordGroup.classList.remove('hidden');
+        labelExtra.textContent = role.extraLabel;
+        fieldExtra.placeholder = role.extraPlaceholder;
+        agreementText.textContent = 'Kullanım koşullarını kabul ediyorum';
+        switchLink.textContent = 'Zaten hesabın var mı? Giriş yap';
+        forgotPasswordBtn.classList.add('hidden');
+      } else {
+        registerNameRow.classList.add('hidden');
+        extraGroup.classList.add('hidden');
+        confirmPasswordGroup.classList.add('hidden');
+        agreementText.textContent = 'Beni hatırla';
+        switchLink.textContent = 'Hesabın yok mu? Kayıt ol';
+        forgotPasswordBtn.classList.remove('hidden');
+      }
+
+      switchNote.textContent = currentMode === 'login'
+        ? 'Yeni kullanıcılar için kayıt seçeneği kullanılabilir. Kurumsal kullanıcılar için bu alan başvuru/hesap oluşturma mantığıyla da ilerleyebilir.'
+        : 'Bu kayıt alanı proje prototipi içindir. Gerçek sistemde eczane ve depo kayıtları admin onayı ile ilerleyebilir.';
+
+      previewTags.innerHTML = role.previewTags
+        .map(tag => `<span class="preview-tag">${tag}</span>`)
+        .join('');
+    }
+
+    authTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        currentMode = tab.dataset.mode;
+        const activeRole = document.querySelector('.role-tab.active').dataset.role;
+        renderRole(activeRole);
+      });
+    });
+
+    switchLink.addEventListener('click', () => {
+      currentMode = currentMode === 'login' ? 'register' : 'login';
+      const activeRole = document.querySelector('.role-tab.active').dataset.role;
+      renderRole(activeRole);
+    });
+
+    roleTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        renderRole(tab.dataset.role);
+      });
+    });
+
+    loginForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const activeRole = document.querySelector('.role-tab.active').dataset.role;
+      const roleName = roles[activeRole][currentMode].title;
+      const actionText = currentMode === 'login' ? 'giriş' : 'kayıt';
+      alert(`${roleName} için demo ${actionText} işlemi hazır. Sonraki adımda bu ekranı dashboard sayfalarına bağlayabiliriz.`);
+    });
+  </script>
+</body>
+</html>

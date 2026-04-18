@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MediTrack - Hasta Paneli</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #f4f8fc;
+      color: #1f2937;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: linear-gradient(180deg, #0f5fc1 0%, #119e82 100%);
+      color: white;
+      padding: 28px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .brand h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .brand p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.5;
+      margin-bottom: 28px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .menu-item {
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.08);
+      cursor: pointer;
+      transition: 0.2s ease;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .menu-item:hover,
+    .menu-item.active {
+      background: rgba(255,255,255,0.18);
+    }
+
+    .sidebar-footer {
+      margin-top: 30px;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.12);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .main {
+      padding: 28px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .welcome h2 {
+      font-size: 30px;
+      margin-bottom: 6px;
+    }
+
+    .welcome p {
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    .user-box {
+      background: white;
+      border: 1px solid #e5edf5;
+      border-radius: 18px;
+      padding: 14px 18px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1px solid #e6edf5;
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 14px 35px rgba(15, 23, 42, 0.05);
+    }
+
+    .stat-card span {
+      font-size: 13px;
+      color: #64748b;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .stat-card h3 {
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+
+    .stat-card p {
+      font-size: 14px;
+      color: #6b7280;
+      line-height: 1.5;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 22px;
+      margin-bottom: 22px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e6edf5;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 14px 35px rgba(15, 23, 42, 0.05);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .card-header h3 {
+      font-size: 22px;
+    }
+
+    .card-header p {
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      border: none;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .primary-btn {
+      background: linear-gradient(90deg, #1d7df2 0%, #11a87f 100%);
+      color: white;
+    }
+
+    .secondary-btn {
+      background: #eef5ff;
+      color: #245ba8;
+    }
+
+    .primary-btn:hover,
+    .secondary-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .qr-box {
+      border: 2px dashed #bfdbfe;
+      background: #f8fbff;
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .qr-icon {
+      font-size: 44px;
+      margin-bottom: 12px;
+    }
+
+    .qr-box h4 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .qr-box p {
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .prescription-list,
+    .pharmacy-list,
+    .medicine-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .list-item {
+      border: 1px solid #e7eef6;
+      border-radius: 18px;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .list-item h4 {
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+
+    .list-item p {
+      font-size: 14px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    .badge {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .badge.success {
+      background: #e8faf1;
+      color: #147a52;
+    }
+
+    .badge.warning {
+      background: #fff7e6;
+      color: #a16207;
+    }
+
+    .badge.info {
+      background: #eef5ff;
+      color: #245ba8;
+    }
+
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .nearby-item {
+      border: 1px solid #e7eef6;
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .nearby-item + .nearby-item {
+      margin-top: 12px;
+    }
+
+    .nearby-item h4 {
+      margin-bottom: 6px;
+    }
+
+    .nearby-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1100px) {
+      .stats,
+      .content-grid,
+      .bottom-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .main {
+        padding: 18px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .welcome h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div>
+        <div class="brand">
+          <h1>MediTrack</h1>
+          <p>Hasta paneli üzerinden reçetelerinizi görüntüleyebilir, ilaç durumunu kontrol edebilir ve size en yakın eczaneleri inceleyebilirsiniz.</p>
+        </div>
+
+        <nav class="menu">
+          <div class="menu-item active">Ana Sayfa</div>
+          <div class="menu-item">QR Reçete Oku</div>
+          <div class="menu-item">Önceki Reçetelerim</div>
+          <div class="menu-item">İlaç Durumu</div>
+          <div class="menu-item">Yakındaki Eczaneler</div>
+          <div class="menu-item">Profilim</div>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        <strong>Demo Bilgisi:</strong><br />
+        Bu ekran bitirme projesi prototipi için hazırlanmıştır. Veriler örnektir.
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="welcome">
+          <h2>Merhaba, Ayşe Yılmaz</h2>
+          <p>Bugün reçete bilgilerinizi görüntüleyebilir, ilaç uygunluğunu kontrol edebilir ve yakındaki eczaneleri inceleyebilirsiniz.</p>
+        </div>
+
+        <div class="user-box">
+          <strong>Hasta No:</strong> PT-10245<br />
+          <span style="color:#64748b; font-size:14px;">Son giriş: 17 Nisan 2026</span>
+        </div>
+      </div>
+
+      <section class="stats">
+        <div class="stat-card">
+          <span>Aktif Reçete</span>
+          <h3>2</h3>
+          <p>Sistemde görüntülenebilir aktif reçeteniz bulunuyor.</p>
+        </div>
+        <div class="stat-card">
+          <span>Geçmiş Reçeteler</span>
+          <h3>8</h3>
+          <p>Daha önce oluşturulmuş reçete kayıtlarınızı inceleyebilirsiniz.</p>
+        </div>
+        <div class="stat-card">
+          <span>Yakındaki Eczane</span>
+          <h3>5</h3>
+          <p>Konumunuza yakın uygun eczaneler listelendi.</p>
+        </div>
+        <div class="stat-card">
+          <span>Bekleyen İlaç Talebi</span>
+          <h3>1</h3>
+          <p>Temin edilmesi beklenen ilaç bildiriminiz mevcut.</p>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>QR Reçete İşlemleri</h3>
+              <p>Yeni reçetenizi sisteme eklemek veya görüntülemek için kullanın.</p>
+            </div>
+          </div>
+
+          <div class="qr-box">
+            <div class="qr-icon">⌁</div>
+            <h4>QR kodu okut</h4>
+            <p>Reçete üzerindeki QR kodu taratarak ilaç listenizi ve uygun eczaneleri görüntüleyin.</p>
+            <button class="primary-btn" id="scan-btn">QR Kod Tara</button>
+          </div>
+
+          <div class="quick-actions">
+            <button class="secondary-btn">Son reçeteyi görüntüle</button>
+            <button class="secondary-btn">İlaç listemi aç</button>
+            <button class="secondary-btn">Yakındaki eczaneler</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>İlaç Durumu</h3>
+              <p>Reçetelerdeki ilaçların mevcut durumunu kontrol edin.</p>
+            </div>
+          </div>
+
+          <div class="medicine-list">
+            <div class="list-item">
+              <div>
+                <h4>Parol 500 mg</h4>
+                <p>En yakın 3 eczanede mevcut.</p>
+              </div>
+              <span class="badge success">Mevcut</span>
+            </div>
+
+            <div class="list-item">
+              <div>
+                <h4>Augmentin 1000 mg</h4>
+                <p>Yakındaki eczanelerde sınırlı stok bulunuyor.</p>
+              </div>
+              <span class="badge warning">Az Stok</span>
+            </div>
+
+            <div class="list-item">
+              <div>
+                <h4>Ventolin Şurup</h4>
+                <p>Bulunamadı, talep oluşturabilirsiniz.</p>
+              </div>
+              <span class="badge info">Talep Açılabilir</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bottom-grid">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>Önceki Reçetelerim</h3>
+              <p>Son oluşturulan reçete kayıtlarınızı görüntüleyin.</p>
+            </div>
+            <button class="secondary-btn">Tümünü Gör</button>
+          </div>
+
+          <div class="prescription-list">
+            <div class="list-item">
+              <div>
+                <h4>Reçete No: RX-2026-1042</h4>
+                <p>15 Nisan 2026 • 3 ilaç • Aile Hekimliği</p>
+              </div>
+              <span class="badge success">Aktif</span>
+            </div>
+
+            <div class="list-item">
+              <div>
+                <h4>Reçete No: RX-2026-0978</h4>
+                <p>02 Nisan 2026 • 2 ilaç • Dahiliye</p>
+              </div>
+              <span class="badge info">Geçmiş</span>
+            </div>
+
+            <div class="list-item">
+              <div>
+                <h4>Reçete No: RX-2026-0864</h4>
+                <p>21 Mart 2026 • 4 ilaç • Kulak Burun Boğaz</p>
+              </div>
+              <span class="badge info">Geçmiş</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>Yakındaki Eczaneler</h3>
+              <p>Konumunuza yakın ve uygun görünen eczaneler.</p>
+            </div>
+            <button class="secondary-btn">Haritada Aç</button>
+          </div>
+
+          <div class="pharmacy-list">
+            <div class="nearby-item">
+              <h4>Kadıköy Health Pharmacy</h4>
+              <p>Reçetenizdeki 2 ilaç mevcut görünüyor.</p>
+              <div class="nearby-meta">
+                <span>850 m</span>
+                <span class="badge success">Uygun</span>
+              </div>
+            </div>
+
+            <div class="nearby-item">
+              <h4>Moda Care Pharmacy</h4>
+              <p>1 ilaç mevcut, 1 ilaç için talep açılabilir.</p>
+              <div class="nearby-meta">
+                <span>1.4 km</span>
+                <span class="badge warning">Kısmi Uygun</span>
+              </div>
+            </div>
+
+            <div class="nearby-item">
+              <h4>Rıhtım Plus Pharmacy</h4>
+              <p>Şu an sınırlı stok bilgisi gösteriliyor.</p>
+              <div class="nearby-meta">
+                <span>2.1 km</span>
+                <span class="badge info">Kontrol Et</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    document.getElementById('scan-btn').addEventListener('click', function () {
+      alert('Demo QR tarama ekranı burada açılacak. Sonraki adımda bunu gerçek bir reçete detay kartına bağlayabiliriz.');
+    });
+  </script>
+</body>
+</html>
